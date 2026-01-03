@@ -66,8 +66,23 @@ for hint_file in .lddl/hints/*.json; do
       title="Add $dep_count new dependencies"
     fi
     
-    # Call lddl to create the decision
-    lddl new --title "$title" --non-interactive
+    # Collect additional information
+    echo "Let's add more context to your decision log..."
+    echo ""
+    
+    read -p "Why did you add this dependency? (Context): " context
+    read -p "What will you use it for? (Decision): " decision
+    read -p "Any trade-offs or impacts? (Consequences): " consequences
+    echo ""
+    
+    # Build the lddl command with all options
+    cmd="lddl new --title \"$title\""
+    [ -n "$context" ] && cmd="$cmd --context \"$context\""
+    [ -n "$decision" ] && cmd="$cmd --decision \"$decision\""
+    [ -n "$consequences" ] && cmd="$cmd --consequences \"$consequences\""
+    
+    # Execute the command
+    eval $cmd
     echo "✓ Decision logged"
   else
     echo "⏭  Skipped"

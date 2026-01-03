@@ -22,6 +22,10 @@ program
   .command("new")
   .description("Create a new decision log")
   .option("-t, --title <title>", "Decision title")
+  .option("-c, --context <context>", "Context for the decision")
+  .option("-d, --decision <decision>", "The decision made")
+  .option("-C, --consequences <consequences>", "Consequences of the decision")
+  .option("-r, --references <references>", "References or links")
   .action(newCommand);
 
 program

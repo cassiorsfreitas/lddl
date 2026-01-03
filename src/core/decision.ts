@@ -3,7 +3,16 @@ import { join } from "path";
 
 const getDecisionsDir = () => join(process.cwd(), ".lddl/decisions");
 
-export const createDecision = async ({ title }: { title: string }) => {
+export interface DecisionInput {
+  title: string;
+  context?: string;
+  decision?: string;
+  consequences?: string;
+  references?: string;
+}
+
+export const createDecision = async (input: DecisionInput) => {
+  const { title, context, decision, consequences, references } = input;
   const DECISIONS_DIR = getDecisionsDir();
 
   await mkdir(DECISIONS_DIR, { recursive: true });
@@ -23,19 +32,19 @@ export const createDecision = async ({ title }: { title: string }) => {
 
 ## Context
 
-<!-- What is the issue or decision that needs to be made? -->
+${context || "<!-- What is the issue or decision that needs to be made? -->"}
 
 ## Decision
 
-<!-- What did you decide? -->
+${decision || "<!-- What did you decide? -->"}
 
 ## Consequences
 
-<!-- What are the trade-offs of this decision? -->
+${consequences || "<!-- What are the trade-offs of this decision? -->"}
 
 ## References
 
-<!-- Links, issues, or other relevant information -->
+${references || "<!-- Links, issues, or other relevant information -->"}
 `;
 
   await writeFile(filepath, content, "utf-8");
