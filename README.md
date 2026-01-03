@@ -107,10 +107,19 @@ All prompts are optional - you can skip by pressing Enter or typing 'n'.
 - **Onboarding**: Help new developers understand past choices
 - **Low Friction**: Integrates into existing workflow
 
+## Future Features
+
+We're planning to expand LDDL with more intelligent detectors and features:
+
+- 🏗️ **Infrastructure Changes** - Detect Docker, CI/CD, and deployment configuration changes
+- 🏛️ **Architecture Changes** - Track modifications to folder structure, module boundaries, and design patterns
+- 🔄 **Process Changes** - Detect new scripts, workflow changes, and development process updates
+- ✅ **Required Fields** - Configurable mandatory fields for decision logs
+- 🤖 **Smart Suggestions** - AI-powered context suggestions based on code changes
+- 🔍 **Advanced Detectors** - Monitor test coverage changes, security updates, and performance impacts
+- 📊 **Decision Analytics** - Visualize decision patterns and track technical debt
+- 🔗 **Integration Support** - Connect with issue trackers, wikis, and team communication tools
+
 ## License
 
 MIT
-
-## Author
-
-cassiorsfreitas
