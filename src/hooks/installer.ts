@@ -75,14 +75,17 @@ for hint_file in .lddl/hints/*.json; do
     read -p "Any trade-offs or impacts? (Consequences): " consequences
     echo ""
     
-    # Build the lddl command with all options
-    cmd="lddl new --title \"$title\""
-    [ -n "$context" ] && cmd="$cmd --context \"$context\""
-    [ -n "$decision" ] && cmd="$cmd --decision \"$decision\""
-    [ -n "$consequences" ] && cmd="$cmd --consequences \"$consequences\""
+    # Call lddl with proper argument passing (no eval needed)
+    if [ -n "$context" ] && [ -n "$decision" ] && [ -n "$consequences" ]; then
+      lddl new --title "$title" --context "$context" --decision "$decision" --consequences "$consequences"
+    elif [ -n "$context" ] && [ -n "$decision" ]; then
+      lddl new --title "$title" --context "$context" --decision "$decision"
+    elif [ -n "$context" ]; then
+      lddl new --title "$title" --context "$context"
+    else
+      lddl new --title "$title"
+    fi
     
-    # Execute the command
-    eval $cmd
     echo "✓ Decision logged"
   else
     echo "⏭  Skipped"
