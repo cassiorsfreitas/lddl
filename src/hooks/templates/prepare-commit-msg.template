@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+
+import { spawn } from 'child_process';
+
+const commitMsgFile = process.argv[2];
+const commitSource = process.argv[3];
+
+if (commitSource === 'merge' || commitSource === 'squash') {
+  process.exit(0);
+}
+
+const lddl = spawn('lddl', ['__hook-prepare-commit-msg', commitMsgFile], {
+  stdio: 'inherit',
+  shell: true
+});
+
+lddl.on('exit', (code) => {
+  process.exit(code || 0);
+});

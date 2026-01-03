@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+import { spawn } from 'child_process';
+
+const lddl = spawn('lddl', ['__hook-pre-commit'], {
+  stdio: 'inherit',
+  shell: true
+});
+
+lddl.on('exit', (code) => {
+  process.exit(code || 0);
+});
