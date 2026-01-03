@@ -1,17 +1,46 @@
 {
   "name": "lddl",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Local-first CLI to log technical decisions directly in your git workflow",
+  "main": "dist/cli/index.js",
   "type": "module",
+  "bin": {
+    "lddl": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.cli.json",
+    "prepublishOnly": "npm run build",
     "dev": "tsx src/cli/index.ts",
     "start": "node dist/cli/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "decision-log",
+    "adr",
+    "architecture-decision-records",
+    "technical-decisions",
+    "git-hooks",
+    "cli",
+    "developer-tools",
+    "documentation"
+  ],
+  "author": "Cassio Freitas",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cassiofreitas/lddl.git"
+  },
+  "homepage": "https://github.com/cassiofreitas/lddl#readme",
+  "bugs": {
+    "url": "https://github.com/cassiofreitas/lddl/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@inquirer/prompts": "^8.1.0",
     "commander": "^14.0.2",
@@ -21,8 +50,5 @@
     "@types/node": "^25.0.3",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
-  },
-  "bin": {
-    "lddl": "./dist/cli/index.js"
   }
 }
