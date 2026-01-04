@@ -1,17 +1,26 @@
 #!/usr/bin/env node
 
 import { Command } from "commander";
+import { readFileSync } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 import { newCommand } from "./new.js";
 import { initCommand } from "./init.js";
 import { listCommand } from "./list.js";
 import { handlePreCommit } from "./hook-handlers.js";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const packageJson = JSON.parse(
+  readFileSync(join(__dirname, "../../package.json"), "utf-8")
+);
 
 const program = new Command();
 
 program
   .name("lddl")
   .description("Local-first CLI to log technical decisions.")
-  .version("0.0.1");
+  .version(packageJson.version);
 
 program
   .command("init")
