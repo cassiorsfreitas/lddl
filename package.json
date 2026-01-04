@@ -5,7 +5,7 @@
   "main": "dist/cli/index.js",
   "type": "module",
   "bin": {
-    "lddl": "./dist/cli/index.js"
+    "lddl": "dist/cli/index.js"
   },
   "files": [
     "dist/**/*",
@@ -33,7 +33,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cassiofreitas/lddl.git"
+    "url": "git+https://github.com/cassiofreitas/lddl.git"
   },
   "homepage": "https://github.com/cassiofreitas/lddl#readme",
   "bugs": {
