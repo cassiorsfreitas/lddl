@@ -1,6 +1,6 @@
 {
   "name": "lddl",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Local-first CLI to log technical decisions directly in your git workflow",
   "main": "dist/cli/index.js",
   "type": "module",
