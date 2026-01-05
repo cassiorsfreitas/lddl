@@ -33,11 +33,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cassiofreitas/lddl.git"
+    "url": "git+https://github.com/cassiorsfreitas/lddl.git"
   },
-  "homepage": "https://github.com/cassiofreitas/lddl#readme",
+  "homepage": "https://github.com/cassiorsfreitas/lddl#readme",
   "bugs": {
-    "url": "https://github.com/cassiofreitas/lddl/issues"
+    "url": "https://github.com/cassiorsfreitas/lddl/issues"
   },
   "engines": {
     "node": ">=18.0.0"
