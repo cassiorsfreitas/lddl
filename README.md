@@ -10,6 +10,12 @@ A local-first CLI tool that helps you log technical decisions directly in your g
 - 💾 **Local-First** - Everything stored as markdown in your repository
 - 🚀 **Non-Intrusive** - Never blocks commits, all prompts are optional
 
+## Requirements
+
+- **Node.js**: >= 18.0.0
+- **npm** or **yarn** (for installation)
+- **Git**: Required for git hook integration
+
 ## Installation
 
 ```bash
