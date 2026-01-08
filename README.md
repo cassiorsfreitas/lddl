@@ -4,11 +4,14 @@ A local-first CLI tool that helps you log technical decisions directly in your g
 
 ## Features
 
-- 🪝 **Git Hook Integration** - Automatically prompts for decision logs when you add dependencies
+- 🪝 **Git Hook Integration** - Automatically prompts for decision logs when you detect changes
+- 🏗️ **Infrastructure Detection** - Detects Docker, CI/CD, and deployment configuration changes
+- 📦 **Dependency Tracking** - Monitors new package additions automatically
 - 📝 **ADR Format** - Structured markdown files following Architecture Decision Records pattern
 - 🎯 **Simple CLI** - Create and list decisions with easy commands
 - 💾 **Local-First** - Everything stored as markdown in your repository
 - 🚀 **Non-Intrusive** - Never blocks commits, all prompts are optional
+- 🔀 **Smart Grouping** - Groups multiple changes and offers combined or individual logging
 
 ## Requirements
 
@@ -113,11 +116,31 @@ All prompts are optional - you can skip by pressing Enter or typing 'n'.
 - **Onboarding**: Help new developers understand past choices
 - **Low Friction**: Integrates into existing workflow
 
+## What Gets Detected
+
+LDDL automatically detects various types of changes in your commits:
+
+### Dependencies
+
+- New npm/yarn packages in `package.json`
+- Additions to both `dependencies` and `devDependencies`
+
+### Infrastructure
+
+- **Docker**: Dockerfile, docker-compose.yml, .dockerfile files
+- **CI/CD**: GitHub Actions, GitLab CI, CircleCI, Jenkins, Travis CI, Azure Pipelines, Bitbucket Pipelines
+- **Deployment**: Kubernetes, Terraform, Helm, Ansible configurations
+
+When multiple changes are detected, you can:
+
+- Create one combined decision log for all changes
+- Create separate logs for each change type
+- Skip any or all prompts
+
 ## Future Features
 
 We're planning to expand LDDL with more intelligent detectors and features:
 
-- 🏗️ **Infrastructure Changes** - Detect Docker, CI/CD, and deployment configuration changes
 - 🏛️ **Architecture Changes** - Track modifications to folder structure, module boundaries, and design patterns
 - 🔄 **Process Changes** - Detect new scripts, workflow changes, and development process updates
 - ✅ **Required Fields** - Configurable mandatory fields for decision logs
