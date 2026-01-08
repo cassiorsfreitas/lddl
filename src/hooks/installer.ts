@@ -23,79 +23,33 @@ lddl.on('exit', (code) => {
 });
 `;
 
-const PREPARE_COMMIT_MSG_TEMPLATE = `#!/bin/bash
+const PREPARE_COMMIT_MSG_TEMPLATE = `#!/usr/bin/env node
 
-# LDDL prepare-commit-msg hook
-# This hook prompts the user based on detected hints
+// LDDL prepare-commit-msg hook
+// This hook prompts the user based on detected hints
 
-commitMsgFile="$1"
-commitSource="$2"
+const { spawn } = require('child_process');
+const fs = require('fs');
 
-# Only prompt for regular commits (not merge, squash, or amended commits)
-if [ -n "$commitSource" ] && [ "$commitSource" != "message" ]; then
-  exit 0
-fi
+const commitMsgFile = process.argv[2];
+const commitSource = process.argv[3];
 
-# Check if there are hints
-if [ ! -d ".lddl/hints" ] || [ -z "$(ls -A .lddl/hints/*.json 2>/dev/null)" ]; then
-  exit 0
-fi
+if (commitSource === 'merge' || commitSource === 'squash') {
+  process.exit(0);
+}
 
-# Process each hint
-for hint_file in .lddl/hints/*.json; do
-  # Extract dependencies from hint file
-  deps=$(node -e "const fs=require('fs'); const hint=JSON.parse(fs.readFileSync('$hint_file')); console.log(hint.context.dependencies.join(', '));")
-  
-  echo ""
-  echo "📦 New dependencies detected: $deps"
-  echo ""
-  
-  # Prompt user with direct /dev/tty access
-  exec < /dev/tty
-  read -p "Would you like to create a decision log for this? (y/N) " -r
-  echo ""
-  
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # Extract first dependency for the title
-    first_dep=$(node -e "const fs=require('fs'); const hint=JSON.parse(fs.readFileSync('$hint_file')); console.log(hint.context.dependencies[0]);")
-    dep_count=$(node -e "const fs=require('fs'); const hint=JSON.parse(fs.readFileSync('$hint_file')); console.log(hint.context.dependencies.length);")
-    
-    if [ "$dep_count" -eq 1 ]; then
-      title="Add $first_dep dependency"
-    else
-      title="Add $dep_count new dependencies"
-    fi
-    
-    # Collect additional information
-    echo "Let's add more context to your decision log..."
-    echo ""
-    
-    read -p "Why did you add this dependency? (Context): " context
-    read -p "What will you use it for? (Decision): " decision
-    read -p "Any trade-offs or impacts? (Consequences): " consequences
-    echo ""
-    
-    # Call lddl with proper argument passing (no eval needed)
-    if [ -n "$context" ] && [ -n "$decision" ] && [ -n "$consequences" ]; then
-      lddl new --title "$title" --context "$context" --decision "$decision" --consequences "$consequences"
-    elif [ -n "$context" ] && [ -n "$decision" ]; then
-      lddl new --title "$title" --context "$context" --decision "$decision"
-    elif [ -n "$context" ]; then
-      lddl new --title "$title" --context "$context"
-    else
-      lddl new --title "$title"
-    fi
-    
-    echo "✓ Decision logged"
-  else
-    echo "⏭  Skipped"
-  fi
-  
-  # Clean up hint file
-  rm "$hint_file"
-done
+// Open /dev/tty for interactive input in git hooks
+const tty = fs.openSync('/dev/tty', 'r');
 
-exit 0
+const lddl = spawn('lddl', ['__hook-prepare-commit-msg', commitMsgFile], {
+  stdio: [tty, process.stdout, process.stderr],
+  shell: true
+});
+
+lddl.on('exit', (code) => {
+  fs.closeSync(tty);
+  process.exit(code || 0);
+});
 `;
 
 async function findGitDir(): Promise<string | null> {

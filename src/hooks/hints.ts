@@ -4,10 +4,18 @@ import { existsSync } from "fs";
 
 const HINTS_DIR = ".lddl/hints";
 
+export type HintType =
+  | "dependency-added"
+  | "infrastructure-change"
+  | "architecture-change"
+  | "process-change";
+
 export interface Hint {
-  type: "dependency-added";
+  type: HintType;
   context: {
-    dependencies: string[];
+    dependencies?: string[];
+    changedFiles?: string[];
+    changeType?: string;
     timestamp: string;
   };
 }

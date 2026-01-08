@@ -7,7 +7,7 @@ import { dirname, join } from "path";
 import { newCommand } from "./new.js";
 import { initCommand } from "./init.js";
 import { listCommand } from "./list.js";
-import { handlePreCommit } from "./hook-handlers.js";
+import { handlePreCommit, handlePrepareCommitMsg } from "./hook-handlers.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -46,5 +46,10 @@ program
   .command("__hook-pre-commit")
   .description("Internal: called by pre-commit hook")
   .action(handlePreCommit);
+
+program
+  .command("__hook-prepare-commit-msg <commitMsgFile>")
+  .description("Internal: called by prepare-commit-msg hook")
+  .action(handlePrepareCommitMsg);
 
 program.parseAsync();
